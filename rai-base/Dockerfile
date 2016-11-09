@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y  \
     add-apt-repository ppa:ubuntu-toolchain-r/test &&             \
     apt-get update && apt-get install --no-install-recommends -y  \
       build-essential                                             \
+      gcc                                                         \
       clang                                                       \
       bzip2                                                       \
       autoconf                                                    \
