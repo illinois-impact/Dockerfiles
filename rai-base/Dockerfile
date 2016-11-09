@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y  \
       build-essential                                             \
       gcc                                                         \
       clang                                                       \
+      ntp                                                         \
       bzip2                                                       \
       autoconf                                                    \
       automake                                                    \
@@ -37,6 +38,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y  \
       cmake &&                                                    \
     rm -rf /var/lib/apt/lists/*
 
+RUN ntpdate pool.ntp.org
 
 #Setup User
 ENV USERNAME raiuser
