@@ -1,0 +1,16 @@
+[Unit]
+Description=NSQLookupD
+After=network.target
+
+[Service]
+WorkingDirectory=/usr/local/nsq
+ExecStart=/usr/local/nsq/bin/nsqadmin --lookupd-http-address=0.0.0.0:4161
+ExecReload=/bin/kill -HUP $MAINPID
+Type=simple
+KillMode=process
+Restart=on-failure
+RestartSec=10s
+User=root
+
+[Install]
+WantedBy=multi-user.target
