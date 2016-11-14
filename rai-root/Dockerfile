@@ -37,3 +37,5 @@ RUN apt-get update && apt-get install --no-install-recommends -y  \
       libopenmpi-dev                                              \
       cmake &&                                                    \
     rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
