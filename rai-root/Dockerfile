@@ -12,30 +12,50 @@ RUN apt-get update && apt-get install --no-install-recommends -y  \
       python-software-properties &&                               \
     add-apt-repository ppa:ubuntu-toolchain-r/test &&             \
     apt-get update && apt-get install --no-install-recommends -y  \
-      build-essential                                             \
-      gcc                                                         \
-      clang                                                       \
-      ntp                                                         \
-      bzip2                                                       \
       autoconf                                                    \
       automake                                                    \
-      make                                                        \
-      tar                                                         \
-      unzip                                                       \
-      zlib1g-dbg                                                  \
-      wget                                                        \
-      git                                                         \
+      build-essential                                             \
+      bzip2                                                       \
+      ca-certificates                                             \
+      clang                                                       \
+      cmake                                                       \
+      curl                                                        \
       file                                                        \
-      libhdf5-dev                                                 \
+      gcc                                                         \
+      git                                                         \
+      git-core                                                    \
       libhdf5-10                                                  \
       libhdf5-10-dbg                                              \
+      libhdf5-cpp-11                                              \
+      libhdf5-cpp-11-dbg                                          \
+      libhdf5-dev                                                 \
       libhdf5-openmpi-10                                          \
       libhdf5-openmpi-10-dbg                                      \
       libhdf5-openmpi-dev                                         \
-      libhdf5-cpp-11                                              \
-      libhdf5-cpp-11-dbg                                          \
       libopenmpi-dev                                              \
-      cmake &&                                                    \
+      make                                                        \
+      mercurial                                                   \
+      ntp                                                         \
+      pkg-config                                                  \
+      tar                                                         \
+      unzip                                                       \
+      wget                                                        \
+      zlib1g-dbg &&                                               \
     rm -rf /var/lib/apt/lists/*
+
+
+ENV GOLANG_VERSION 1.7.3
+ENV GOLANG_DOWNLOAD_URL https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz
+ENV GOLANG_DOWNLOAD_SHA256 508028aac0654e993564b6e2014bf2d4a9751e3b286661b0b0040046cf18028e
+
+RUN curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
+	&& echo "$GOLANG_DOWNLOAD_SHA256  golang.tar.gz" | sha256sum -c - \
+	&& tar -C /usr/local -xzf golang.tar.gz \
+	&& rm golang.tar.gz
+
+ENV GOPATH /go
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
+
+RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
 WORKDIR /build
