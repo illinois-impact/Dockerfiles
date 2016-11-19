@@ -43,6 +43,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y  \
       zlib1g-dbg &&                                               \
     rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install --no-install-recommends -y  \
+      linux-perf &&                                               \
+    apt-get clean &&                                              \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* &&              \
+    mv /usr/bin/perf_4.4 /usr/bin/perf
+
 # RUN apt-get update && apt-get install --no-install-recommends -y  \
 #       linux-cloud-tools-`uname -r`                                \
 #       linux-tools-`uname -r`                                      \
