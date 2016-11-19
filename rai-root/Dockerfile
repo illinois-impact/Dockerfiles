@@ -33,6 +33,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y  \
       libhdf5-openmpi-10-dbg                                      \
       libhdf5-openmpi-dev                                         \
       libopenmpi-dev                                              \
+      linux-tools-common                                          \
+      linux-tools-generic                                         \
       make                                                        \
       mercurial                                                   \
       ntp                                                         \
