@@ -33,10 +33,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y  \
       libhdf5-openmpi-10-dbg                                      \
       libhdf5-openmpi-dev                                         \
       libopenmpi-dev                                              \
-      linux-cloud-tools-`uname -r`                                \
-      linux-tools-`uname -r`                                      \
-      linux-tools-common                                          \
-      linux-tools-generic                                         \
       make                                                        \
       mercurial                                                   \
       ntp                                                         \
@@ -47,6 +43,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y  \
       zlib1g-dbg &&                                               \
     rm -rf /var/lib/apt/lists/*
 
+# RUN apt-get update && apt-get install --no-install-recommends -y  \
+#       linux-cloud-tools-`uname -r`                                \
+#       linux-tools-`uname -r`                                      \
+#       linux-tools-common                                          \
+#       linux-tools-generic &&                                      \
+#     rm -rf /var/lib/apt/lists/*
 
 ENV GOLANG_VERSION 1.7.3
 ENV GOLANG_DOWNLOAD_URL https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz
