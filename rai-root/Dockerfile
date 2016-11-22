@@ -37,6 +37,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y  \
       mercurial                                                   \
       ntp                                                         \
       pkg-config                                                  \
+      strace                                                      \
       tar                                                         \
       unzip                                                       \
       wget                                                        \
