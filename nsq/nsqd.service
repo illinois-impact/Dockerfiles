@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/usr/local/nsq
-ExecStart=/usr/local/nsq/bin/nsqd -http-address 0.0.0.0:4151 -tcp-address 0.0.0.0:4150 -lookupd-tcp-address 0.0.0.0:4160
+ExecStart=/usr/local/nsq/bin/nsqd -http-address 0.0.0.0:4151 -tcp-address 0.0.0.0:4150 -lookupd-tcp-address 0.0.0.0:4160 --statsd-address 0.0.0.0:8125 --statsd-mem-stats 
 ExecReload=/bin/kill -HUP $MAINPID
 Type=simple
 KillMode=process

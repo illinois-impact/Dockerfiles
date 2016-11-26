@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/usr/local/nsq
-ExecStart=/usr/local/nsq/bin/nsqadmin --lookupd-http-address=0.0.0.0:4161
+ExecStart=/usr/local/nsq/bin/nsqadmin --lookupd-http-address=0.0.0.0:4161 --graphite-url=0.0.0.0:2003
 ExecReload=/bin/kill -HUP $MAINPID
 Type=simple
 KillMode=process
