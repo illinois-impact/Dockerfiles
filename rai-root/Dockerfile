@@ -132,32 +132,16 @@ RUN python2.7 -m pip --no-cache-dir install \
 # MXNet
 ########################################################################
 
-# Install git, wget and other dependencies
-RUN apt-get update && apt-get install -y \
-  git \
-  libopenblas-dev \
-  libopencv-dev \
-  python-dev \
-  python-numpy \
-  python-setuptools \
-  wget
-
-# Clone MXNet repo and move into it
-RUN cd /root && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
-# Copy config.mk
-  cp make/config.mk config.mk && \
-# Set OpenBLAS
-  sed -i 's/USE_BLAS = atlas/USE_BLAS = openblas/g' config.mk && \
-# Set CUDA flag
-  sed -i 's/USE_CUDA = 0/USE_CUDA = 1/g' config.mk && \
-  sed -i 's/USE_CUDA_PATH = NONE/USE_CUDA_PATH = \/usr\/local\/cuda/g' config.mk && \
-# Set cuDNN flag
-  sed -i 's/USE_CUDNN = 0/USE_CUDNN = 1/g' config.mk && \
-# Make
-  make -j"$(nproc)"
-
-# Install Python package
-RUN cd /root/mxnet/python && python setup.py install
+# install the core library
+RUN apt-get update && apt-get install -y build-essential git libopenblas-dev libopencv-dev
+RUN git clone --recursive https://github.com/dmlc/mxnet/ && cd mxnet && \
+    cp make/config.mk . && \
+    echo "USE_CUDA=1" >>config.mk && \
+    echo "USE_CUDA_PATH=/usr/local/cuda" >>config.mk && \
+    echo "USE_CUDNN=1" >>config.mk && \
+    echo "USE_BLAS=openblas" >>config.mk && \
+    make -j$(nproc) ADD_LDFLAGS=-L/usr/local/cuda/lib64/stubs
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
 
 ########################################################################
