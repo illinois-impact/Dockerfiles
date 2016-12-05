@@ -39,6 +39,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y  \
       pkg-config                                                  \
       strace                                                      \
       tar                                                         \
+      time                                                        \
       unzip                                                       \
       wget                                                        \
       zlib1g-dbg &&                                               \
