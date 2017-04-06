@@ -1,7 +1,6 @@
-FROM webgpu/opencv:ppc64le-8.0-devel
+FROM webgpu/cuda:ppc64le-8.0-devel
 MAINTAINER Abdul Dakkak <dakkak@illinois.edu>
 
-# From https://github.com/victorhcm/dockerfiles/tree/master/cv-buildpack-deps
 # Set CUDA_ROOT
 ENV CUDA_ROOT /usr/local/cuda/bin
 
@@ -69,4 +68,3 @@ RUN \
         -D INSTALL_PYTHON_EXAMPLES=ON \
         -D OPENCV_EXTRA_MODULES_PATH=/root/opencv_contrib/modules \
         -D BUILD_EXAMPLES=ON ..
-
