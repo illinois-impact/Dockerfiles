@@ -1,4 +1,4 @@
-FROM webgpu/cuda:8.0-runtime
+FROM webgpu/cuda:ppc64le-8.0-runtime
 MAINTAINER NVIDIA CORPORATION <digits@nvidia.com>
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
