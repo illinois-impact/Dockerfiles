@@ -1,19 +1,19 @@
-FROM ppc64le/ubuntu:16.04
-MAINTAINER NVIDIA CORPORATION <digits@nvidia.com>
+FROM ppc64le/ubuntu:16.10
+MAINTAINER Abdul Dakkak <dakkak@illinois.edu>
 
 LABEL com.nvidia.volumes.needed="nvidia_driver"
 
-RUN NVIDIA_GPGKEY_SUM=d1be581509378368edeec8c1eb2958702feedf3bc3d17011adbf24efacce4ab5 && \
-    NVIDIA_GPGKEY_FPR=ae09fe4bbd223a84b2ccfce3f60f4b3d7fa2af80 && \
-    apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/ppc64el/7fa2af80.pub && \
-    apt-key adv --export --no-emit-version -a $NVIDIA_GPGKEY_FPR | tail -n +5 > cudasign.pub && \
-    echo "$NVIDIA_GPGKEY_SUM  cudasign.pub" | sha256sum -c --strict - && rm cudasign.pub && \
-    echo "deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/ppc64el /" > /etc/apt/sources.list.d/cuda.list
+RUN apt-get update && apt-get -y --no-install-recommends install wget
+
+WORKDIR /tmp
+RUN CUDA_REPO_URL="http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/ppc64el/cuda-repo-ubuntu1604_8.0.61-1_ppc64el.deb" && \
+    wget ${CUDA_REPO_URL} && dpkg --install *.deb && rm -rf *.deb
+    
 
 ENV CUDA_VERSION 8.0
 LABEL com.nvidia.cuda.version="8.0"
 
-ENV CUDA_PKG_VERSION 8-0=8.0.44-1
+ENV CUDA_PKG_VERSION 8-0=8.0.61-1
 RUN apt-get update && apt-get install -y --no-install-recommends \
         cuda-nvrtc-$CUDA_PKG_VERSION \
         cuda-nvgraph-$CUDA_PKG_VERSION \
