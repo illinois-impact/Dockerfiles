@@ -13,7 +13,7 @@ RUN \
     apt-get install build-essential cmake git pkg-config -y && \
 
     # step 3
-    apt-get install libjpeg8-dev libtiff4-dev libjasper-dev libpng12-dev -y && \
+    apt-get install libjpeg8-dev libtiff-dev libjasper-dev libpng-dev -y && \
 
     # step 4
     apt-get install libgtk2.0-dev -y && \
@@ -49,15 +49,13 @@ RUN \
 # Downloads and configures OpenCV
 RUN \
     cd ~ && \
-    git clone https://github.com/Itseez/opencv.git && \
+    git clone https://github.com/opencv/opencv.git && \
     cd opencv && \
     pwd && \
-    git checkout 3.1.0 && \
 
     cd ~ && \
-    git clone https://github.com/Itseez/opencv_contrib.git && \
+    git clone https://github.com/opencv/opencv_contrib.git && \
     cd opencv_contrib && \
-    git checkout 3.1.0 && \
 
     cd /root/opencv && \
     mkdir build && \
@@ -67,4 +65,11 @@ RUN \
         -D INSTALL_C_EXAMPLES=OFF \
         -D INSTALL_PYTHON_EXAMPLES=ON \
         -D OPENCV_EXTRA_MODULES_PATH=/root/opencv_contrib/modules \
-        -D BUILD_EXAMPLES=ON ..
+        -D BUILD_EXAMPLES=OFF .. &&\
+	cd ~/opencv/build && \
+    make -j $(nproc) && \
+    make install && \
+    ldconfig && \
+
+    cp ~/opencv/build/lib/cv2.so /usr/local/lib/python2.7/dist-packages/
+

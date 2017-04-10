@@ -3,7 +3,7 @@ MAINTAINER Abdul Dakkak <dakkak@illinois.edu>
 
 LABEL com.nvidia.volumes.needed="nvidia_driver"
 
-RUN apt-get update && apt-get -y --no-install-recommends install wget
+RUN apt-get update && apt-get -y --no-install-recommends install wget cmake
 
 WORKDIR /tmp
 RUN CUDA_REPO_URL="http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/ppc64el/cuda-repo-ubuntu1604_8.0.61-1_ppc64el.deb" && \
