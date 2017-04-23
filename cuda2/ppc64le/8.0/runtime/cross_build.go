@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -30,9 +31,9 @@ func crossBuildEnd() {
 }
 
 func runShell() error {
-	// qemu := fmt.Sprintf("/usr/bin/qemu-%s-static", os.Getenv("ARCH"))
-	qemu := "/usr/bin/qemu-ppc64le-static"
-	// println("running = ", append([]string{"-0", "/bin/sh", "/bin/sh"}, os.Args[1:]...))
+	basefile := fmt.Sprintf("qemu-%s-static", os.Getenv("ARCH"))
+	qemu := fmt.Sprintf("/usr/bin/%s", basefile)
+
 	cmd := exec.Command(qemu, append([]string{"-0", "/bin/sh", "/bin/sh"}, os.Args[1:]...)...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
