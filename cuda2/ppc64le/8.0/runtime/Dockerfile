@@ -1,23 +1,17 @@
 FROM multiarch/ubuntu-core:ppc64el-xenial
 MAINTAINER Abdul Dakkak <dakkak@illinois.edu>
 
-ARG ARCH=ppc64le
-ENV QEMU_VERSION v2.8.1
+LABEL com.nvidia.volumes.needed="rai-cuda"
+
+ENV ARCH ppc64le
 ENV QEMU_EXECVE 1
 
-
-# ADD https://github.com/multiarch/qemu-user-static/releases/download/v2.8.1/qemu-ppc64le-static /usr/bin/qemu-ppc64le-static
-# RUN chmod +x /usr/bin/qemu-ppc64le-static
-
-COPY ./cross_build          /usr/bin/cross_build
-COPY ./qemu-ppc64le-static  /usr/bin/qemu-ppc64le-static
+COPY . /usr/bin
 
 RUN [ "/usr/bin/qemu-ppc64le-static", "/bin/sh", "-c", "ln -s /usr/bin/cross_build /usr/bin/cross-build-start; ln -s /usr/bin/cross_build /usr/bin/cross-build-end; ln /bin/sh /bin/sh.real" ]
 
 RUN [ "cross-build-start" ]
 
-
-LABEL com.nvidia.volumes.needed="rai-cuda"
 RUN apt-get update && apt-get -y --no-install-recommends install wget cmake
 
 WORKDIR /tmp
