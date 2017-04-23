@@ -3,15 +3,11 @@ MAINTAINER Abdul Dakkak <dakkak@illinois.edu>
 
 ARG ARCH=ppc64le
 
-COPY ./qemu-ppc64le-static /usr/bin
-COPY ./cross_build /usr/bin
+COPY . /usr/bin
 
 LABEL com.nvidia.volumes.needed="rai-cuda"
 
-RUN [ "qemu-ppc64le-static", "/bin/sh", "-c", "ln -s /usr/bin/cross_build /usr/bin/cross-build-start; ln -s /usr/build/cross_build /usr/bin/cross-build-end; ln /bin/sh /bin/sh.real" ]
-
-RUN ls -l /usr/bin/cross_build
-
+RUN [ "/usr/bin/qemu-ppc64le-static", "/bin/sh", "-c", "ln -s /usr/bin/cross_build /usr/bin/cross-build-start; ln -s /usr/build/cross_build /usr/bin/cross-build-end; ln /bin/sh /bin/sh.real" ]
 
 RUN [ "cross-build-start" ]
 
