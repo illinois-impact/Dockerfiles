@@ -32,6 +32,7 @@ func crossBuildEnd() {
 func runShell() error {
 	// qemu := fmt.Sprintf("/usr/bin/qemu-%s-static", os.Getenv("ARCH"))
 	qemu := "/usr/bin/qemu-ppc64le-static"
+	// println("running = ", append([]string{"-0", "/bin/sh", "/bin/sh"}, os.Args[1:]...))
 	cmd := exec.Command(qemu, append([]string{"-0", "/bin/sh", "/bin/sh"}, os.Args[1:]...)...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout

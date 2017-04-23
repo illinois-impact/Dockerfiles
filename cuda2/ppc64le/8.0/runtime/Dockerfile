@@ -1,15 +1,16 @@
 FROM multiarch/ubuntu-core:ppc64el-xenial
 MAINTAINER Abdul Dakkak <dakkak@illinois.edu>
 
-ARG ARCH=ppc64le
+ENV ARCH ppc64le
+ENV QEMU_EXECVE 1
 
 COPY . /usr/bin
 
 LABEL com.nvidia.volumes.needed="rai-cuda"
 
-RUN [ "/usr/bin/qemu-ppc64le-static", "/bin/sh", "-c", "ln -s /usr/bin/cross_build /usr/bin/cross-build-start; ln -s /usr/build/cross_build /usr/bin/cross-build-end; ln /bin/sh /bin/sh.real" ]
+RUN [ "/usr/bin/qemu-ppc64le-static", "/bin/sh", "-c", "ln -s /usr/bin/cross_build /usr/bin/cross-build-start; ln -s /usr/bin/cross_build /usr/bin/cross-build-end; ln /bin/sh /bin/sh.real" ]
 
-RUN [ "/usr/bin/cross-build-start" ]
+RUN [ "cross-build-start" ]
 
 RUN apt-get update && apt-get -y --no-install-recommends install wget cmake
 
@@ -46,4 +47,4 @@ ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
 
 
-RUN [ "/usr/bin/cross-build-end" ]  
+RUN [ "cross-build-end" ]  
