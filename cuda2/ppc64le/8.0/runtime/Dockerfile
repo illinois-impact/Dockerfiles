@@ -47,4 +47,8 @@ ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
 
 
+RUN apt-get update && apt-get -y --no-install-recommends install wget cmake gcc-4.9 g++-4.9 && \
+     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9 && \
+     update-alternatives --config gcc
+
 RUN [ "cross-build-end" ]  
