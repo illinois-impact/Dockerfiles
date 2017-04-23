@@ -11,22 +11,22 @@ import (
 func crossBuildStart() {
 	err := os.Remove("/bin/sh")
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 	}
 	err = os.Link("/usr/bin/cross_build", "/bin/sh")
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 	}
 }
 
 func crossBuildEnd() {
 	err := os.Remove("/bin/sh")
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 	}
 	err = os.Link("/bin/sh.real", "/bin/sh")
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 	}
 }
 

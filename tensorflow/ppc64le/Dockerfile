@@ -25,20 +25,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN curl -fSsL -O https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py && \
+ADD https://bootstrap.pypa.io/get-pip.py /tmp/get-pip.py
+RUN python /tmp/get-pip.py && \
     rm get-pip.py
-
-RUN pip --no-cache-dir install \
-        ipykernel \
-        jupyter \
-        matplotlib \
-        numpy \
-        scipy \
-        sklearn \
-        pandas \
-        && \
-    python -m ipykernel.kernelspec
 
 # Set up Bazel.
 
@@ -48,11 +37,14 @@ RUN pip --no-cache-dir install \
 # we either update the base image beyond 14.04 or openjdk-8 is
 # finally backported to trusty; see e.g.
 #   https://bugs.launchpad.net/trusty-backports/+bug/1368094
-RUN add-apt-repository -y ppa:openjdk-r/ppa && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends openjdk-8-jdk openjdk-8-jre-headless && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN echo 'deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu xenial main' > /etc/apt/sources.list.d/openjdk.list
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends openjdk-8-jdk
+
+RUN update-alternatives --config java --set /usr/lib/jvm/java-8-openjdk-ppc64el/jre/bin/java && \
+    update-alternatives --set java /usr/lib/jvm/java-8-openjdk-ppc64el/jre/bin/java
+
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-ppc64el
 
 # Running bazel inside a `docker build` command causes trouble, cf:
 #   https://github.com/bazelbuild/bazel/issues/134

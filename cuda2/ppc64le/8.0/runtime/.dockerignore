@@ -2,3 +2,4 @@ Dockerfile
 build.sh
 NOTES
 cross_build.go
+Makefile

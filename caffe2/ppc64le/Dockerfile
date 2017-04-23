@@ -20,8 +20,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     protobuf-compiler \
     libgoogle-glog-dev
 
-RUN git clone --recursive https://github.com/caffe2/caffe2.git && \
-    pip install --upgrade pip && \
+RUN pip install --upgrade pip && \
+    pip install --upgrade setuptools && \
     pip install numpy protobuf
 
 ########## OPTIONAL DEPENDENCIES ################
@@ -61,6 +61,8 @@ RUN pip install \
     tornado
 
 ########## INSTALLATION STEPS ###################
+
+ADD https://github.com/caffe2/caffe2.git caffe2
 RUN cd caffe2 && make && cd build && make install
 
 ENV PYTHONPATH /usr/local
