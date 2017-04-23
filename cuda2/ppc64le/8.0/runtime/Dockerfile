@@ -9,7 +9,7 @@ LABEL com.nvidia.volumes.needed="rai-cuda"
 
 RUN [ "/usr/bin/qemu-ppc64le-static", "/bin/sh", "-c", "ln -s /usr/bin/cross_build /usr/bin/cross-build-start; ln -s /usr/build/cross_build /usr/bin/cross-build-end; ln /bin/sh /bin/sh.real" ]
 
-RUN [ "cross-build-start" ]
+RUN [ "/usr/bin/cross-build-start" ]
 
 RUN apt-get update && apt-get -y --no-install-recommends install wget cmake
 
@@ -46,4 +46,4 @@ ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
 
 
-RUN [ "cross-build-end" ]  
+RUN [ "/usr/bin/cross-build-end" ]  
