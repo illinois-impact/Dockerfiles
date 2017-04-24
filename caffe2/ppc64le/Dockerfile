@@ -49,8 +49,6 @@ RUN pip install \
     flask \
     graphviz \
     hypothesis \
-    jupyter \
-    matplotlib \
     pydot \
     python-nvd3 \
     pyyaml \

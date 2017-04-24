@@ -4,7 +4,7 @@ MAINTAINER Abdul Dakkak <dakkak@illinois.edu>
 RUN [ "cross-build-start" ]
 
 # copy from https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/docker/Dockerfile.devel-gpu
-
+# and modifications from https://www.ibm.com/developerworks/community/blogs/fe313521-2e95-46f2-817d-44a4f27eba32/entry/Building_TensorFlow_on_OpenPOWER_Linux_Systems?lang=en
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
@@ -41,9 +41,7 @@ RUN echo 'deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu xenial main' > /etc/
 RUN apt-get update && \
     apt-get install -y --no-install-recommends openjdk-8-jdk
 
-RUN update-alternatives --config java --set /usr/lib/jvm/java-8-openjdk-ppc64el/jre/bin/java && \
-    update-alternatives --set java /usr/lib/jvm/java-8-openjdk-ppc64el/jre/bin/java
-
+RUN sudo update-alternatives --config java
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-ppc64el
 
 # Running bazel inside a `docker build` command causes trouble, cf:
@@ -57,14 +55,10 @@ RUN echo "build --spawn_strategy=standalone --genrule_strategy=standalone" \
 # Install the most recent bazel release.
 ENV BAZEL_VERSION 0.4.5
 WORKDIR /
-RUN mkdir /bazel && \
-    cd /bazel && \
-    curl -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36" -fSsL -O https://github.com/bazelbuild/bazel/releases/download/$BAZEL_VERSION/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh && \
-    curl -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36" -fSsL -o /bazel/LICENSE.txt https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE && \
-    chmod +x bazel-*.sh && \
-    ./bazel-$BAZEL_VERSION-installer-linux-x86_64.sh && \
-    cd / && \
-    rm -f /bazel/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh
+# ADD https://github.com/ibmsoe/bazel/archive/v0.4.5-ppc.tar.gz /bazel
+ADD ./v0.4.5-ppc.tar.gz /
+RUN ls -l /bazel-0.4.5-ppc
+RUN /bazel-0.4.5-ppc/compile.sh --help
 
 # Download and build TensorFlow.
 
