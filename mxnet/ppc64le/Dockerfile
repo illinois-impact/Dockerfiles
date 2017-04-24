@@ -5,10 +5,11 @@ RUN [ "cross-build-start" ]
 
 # install the core library
 RUN apt-get update && apt-get install -y build-essential git libopenblas-dev libopencv-dev
+RUN [ "cross-build-end" ]  
 
 WORKDIR /
 
-ADD https://github.com/dmlc/mxnet/archive/v0.9.3.tar.gz /tmp
+RUN git clone --recursive https://github.com/dmlc/mxnet
 RUN tar -xf /tmp/v0.9.3.tar.gz && \
     mv /mxnet-0.9.3 /mxnet
 RUN cd /mxnet && \

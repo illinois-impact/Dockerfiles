@@ -8,11 +8,11 @@ ENV QEMU_EXECVE 1
 
 COPY . /usr/bin
 
-RUN [ "/usr/bin/qemu-ppc64le-static", "/bin/sh", "-c", "ln -s /usr/bin/cross_build /usr/bin/cross-build-start; ln -s /usr/bin/cross_build /usr/bin/cross-build-end; ln /bin/sh /bin/sh.real" ]
+RUN [ "/usr/bin/qemu-ppc64le-static", "/bin/sh", "-c", "ln -s /usr/bin/cross_build /usr/bin/cross-build-start; ln -s /usr/bin/cross_build /usr/bin/cross-build-end; cp /bin/sh /bin/sh.real" ]
 
 RUN [ "cross-build-start" ]
 
-RUN apt-get update && apt-get -y --no-install-recommends install wget cmake
+RUN apt-get update && apt-get -y --no-install-recommends install wget cmake git
 
 WORKDIR /tmp
 RUN CUDA_REPO_URL="http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/ppc64el/cuda-repo-ubuntu1604_8.0.61-1_ppc64el.deb" && \

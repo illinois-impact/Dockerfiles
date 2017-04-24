@@ -34,7 +34,7 @@ func runShell() error {
 	basefile := fmt.Sprintf("qemu-%s-static", os.Getenv("ARCH"))
 	qemu := fmt.Sprintf("/usr/bin/%s", basefile)
 
-	cmd := exec.Command(qemu, append([]string{"-0", "/bin/sh", "/bin/sh"}, os.Args[1:]...)...)
+	cmd := exec.Command(qemu, append([]string{"-0", "/bin/sh"}, os.Args...)...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -59,6 +59,7 @@ func main() {
 			if exiterr, ok := err.(*exec.ExitError); ok {
 				if status, ok := exiterr.Sys().(syscall.WaitStatus); ok {
 					code = status.ExitStatus()
+					log.Print("failed to run ", os.Args)
 				}
 			}
 		}
