@@ -41,7 +41,7 @@ RUN echo 'deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu xenial main' > /etc/
 RUN apt-get update && \
     apt-get install -y --no-install-recommends openjdk-8-jdk
 
-RUN sudo update-alternatives --config java
+RUN update-alternatives --config java
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-ppc64el
 
 # Running bazel inside a `docker build` command causes trouble, cf:
@@ -58,7 +58,7 @@ WORKDIR /
 # ADD https://github.com/ibmsoe/bazel/archive/v0.4.5-ppc.tar.gz /bazel
 ADD ./v0.4.5-ppc.tar.gz /
 RUN ls -l /bazel-0.4.5-ppc
-RUN /bazel-0.4.5-ppc/compile.sh --help
+RUN /bazel-0.4.5-ppc/compile.sh
 
 # Download and build TensorFlow.
 

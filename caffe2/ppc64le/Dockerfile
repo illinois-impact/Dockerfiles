@@ -46,17 +46,10 @@ RUN apt-get install -y --no-install-recommends \
     wget
 
 RUN pip install \
-    flask \
-    graphviz \
-    hypothesis \
-    pydot \
-    python-nvd3 \
     pyyaml \
     requests \
-    scikit-image \
     scipy \
-    setuptools \
-    tornado
+    setuptools
 
 ########## INSTALLATION STEPS ###################
 
